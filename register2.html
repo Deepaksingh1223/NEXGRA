@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>LIVE MEMBER SIGNUP | NEXGRA</title>
+
+    <meta name="description"
+          content="Create your NEXGRA member account." />
+
+    <link rel="shortcut icon" href="assets/images/Favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/custom-theme.css">
+
+    <style>
+        :root {
+            --brand-primary: #1769aa;
+            --brand-primary-dark: #0d4777;
+            --brand-secondary: #25a9e0;
+            --brand-accent: #43c6b9;
+            --page-bg: #f3f8fc;
+            --card-bg: #ffffff;
+            --input-bg: #f8fbfd;
+            --text-dark: #12263a;
+            --text: #2d4052;
+            --text-muted: #7d8d9c;
+            --border: #dce8ef;
+            --danger: #dc5868;
+            --success: #178b6c;
+            --white: #ffffff;
+            --radius-lg: 28px;
+            --radius-md: 14px;
+            --shadow-card: 0 28px 70px rgba(13, 33, 55, 0.14);
+            --shadow-button: 0 12px 26px rgba(23, 105, 170, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            font-family: "Atkinson Hyperlegible Next", sans-serif;
+            color: var(--text);
+            background: var(--page-bg);
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .register-page {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 32px 15px;
+            overflow: hidden;
+            isolation: isolate;
+            background: radial-gradient( circle at 8% 12%, rgba(37, 169, 224, 0.16), transparent 30% ), radial-gradient( circle at 92% 88%, rgba(67, 198, 185, 0.14), transparent 32% ), var(--page-bg);
+        }
+
+        .register-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1180px;
+            margin: auto;
+        }
+
+        .register-shell {
+            display: grid;
+            grid-template-columns: 0.86fr 1.14fr;
+            min-height: 760px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-lg);
+            background: var(--card-bg);
+            box-shadow: var(--shadow-card);
+            animation: shellEnter 0.75s ease both;
+        }
+
+        /* Left modern branding panel */
+
+        .brand-panel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 760px;
+            padding: 56px 52px 34px;
+            overflow: hidden;
+            color: var(--white);
+            background: linear-gradient( 145deg, rgba(13, 33, 55, 0.98), rgba(23, 105, 170, 0.96) );
+        }
+
+            .brand-panel::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                opacity: 0.13;
+                background-image: linear-gradient(rgba(255, 255, 255, 0.23) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.23) 1px, transparent 1px);
+                background-size: 46px 46px;
+                mask-image: linear-gradient(to bottom right, black, transparent 75%);
+                -webkit-mask-image: linear-gradient( to bottom right, black, transparent 75% );
+            }
+
+            .brand-panel::after {
+                content: "";
+                position: absolute;
+                right: -170px;
+                bottom: -180px;
+                width: 420px;
+                height: 420px;
+                border: 1px solid rgba(255, 255, 255, 0.24);
+                border-radius: 50%;
+                box-shadow: 0 0 0 34px rgba(255, 255, 255, 0.06), 0 0 0 70px rgba(255, 255, 255, 0.045), 0 0 0 108px rgba(255, 255, 255, 0.03);
+            }
+
+        .brand-content,
+        .brand-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            max-width: 200px;
+            margin-bottom: 95px;
+            padding: 9px 13px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+            .brand-logo img {
+                display: block;
+                width: auto;
+                max-width: 100%;
+                height: 43px;
+                object-fit: contain;
+            }
+
+        .eyebrow,
+        .signup-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #bdefff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+        }
+
+        .eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand-accent);
+            box-shadow: 0 0 0 5px rgba(67, 198, 185, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .brand-copy h1 {
+            max-width: 430px;
+            margin: 20px 0 18px;
+            color: #ffffff;
+            font-size: clamp(2.35rem, 4vw, 3.8rem);
+            line-height: 1.04;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+            .brand-copy h1 span {
+                display: block;
+                color: #8de9ed;
+            }
+
+        .brand-copy p {
+            max-width: 390px;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.73);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .benefit-list {
+            display: grid;
+            gap: 18px;
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .benefit-icon {
+            display: grid;
+            width: 43px;
+            height: 43px;
+            flex: 0 0 43px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.17);
+            border-radius: 13px;
+            color: #a4f5f1;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+        }
+
+        .benefit-item strong,
+        .benefit-item small {
+            display: block;
+        }
+
+        .benefit-item strong {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .benefit-item small {
+            margin-top: 3px;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 12px;
+        }
+
+        .brand-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 12px;
+        }
+
+        .footer-line {
+            width: 30px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Right register panel */
+
+        .register-panel {
+            display: flex;
+            align-items: center;
+            padding: 48px 62px;
+            background: var(--card-bg);
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 540px;
+            margin: auto;
+            animation: cardEnter 0.75s 0.12s ease both;
+        }
+
+        .mobile-logo {
+            display: none;
+        }
+
+        .register-heading {
+            margin-bottom: 28px;
+        }
+
+            .register-heading .signup-label {
+                color: var(--brand-primary);
+            }
+
+            .register-heading h2 {
+                margin: 12px 0 8px;
+                color: var(--text-dark);
+                font-size: clamp(1.85rem, 3vw, 2.35rem);
+                line-height: 1.15;
+                font-weight: 800;
+                letter-spacing: -1px;
+            }
+
+            .register-heading p {
+                margin: 0;
+                color: var(--text-muted);
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+        /* Alerts */
+
+        .status-message {
+            display: none;
+            align-items: flex-start;
+            gap: 9px;
+            margin-bottom: 18px;
+            padding: 13px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+            .status-message.show {
+                display: flex;
+                animation: fadeIn 0.3s ease both;
+            }
+
+        .success-message {
+            color: var(--success);
+            background: #eafaf5;
+        }
+
+        .error-message {
+            color: var(--danger);
+            background: #fff0f2;
+        }
+
+        /* Form */
+
+        .registration-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 19px 15px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .required-mark {
+            color: var(--danger);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 16px;
+            color: #9baeba;
+            font-size: 16px;
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: color 0.25s ease;
+        }
+
+        .modern-input,
+        .modern-select {
+            width: 100%;
+            min-height: 50px;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            color: var(--text-dark);
+            background: var(--input-bg);
+            font-size: 13px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .modern-select {
+            padding-left: 16px;
+            cursor: pointer;
+        }
+
+        .modern-input::placeholder {
+            color: #aab7c1;
+        }
+
+        .modern-input:focus,
+        .modern-select:focus {
+            border-color: var(--brand-primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(23, 105, 170, 0.12);
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--brand-primary);
+        }
+
+        .field-help {
+            display: block;
+            margin-top: 6px;
+            color: var(--text-muted);
+            font-size: 10.5px;
+            line-height: 1.45;
+        }
+
+        .input-error {
+            display: none;
+            margin-top: 6px;
+            color: var(--danger);
+            font-size: 10.5px;
+        }
+
+        .form-group.invalid .modern-input,
+        .form-group.invalid .modern-select {
+            border-color: var(--danger);
+        }
+
+        .form-group.invalid .input-error {
+            display: block;
+        }
+
+        /* Password */
+
+        .password-input {
+            padding-right: 48px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 11px;
+            display: grid;
+            width: 32px;
+            height: 32px;
+            place-items: center;
+            border: 0;
+            border-radius: 8px;
+            color: #8ea1ae;
+            background: transparent;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+
+            .password-toggle:hover {
+                color: var(--brand-primary);
+                background: #eaf6fc;
+            }
+
+        .password-strength {
+            display: none;
+            margin-top: 8px;
+        }
+
+            .password-strength.visible {
+                display: block;
+            }
+
+        .strength-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 5px;
+        }
+
+        .strength-segment {
+            height: 4px;
+            flex: 1;
+            border-radius: 10px;
+            background: #e5edf1;
+            transition: background 0.25s ease;
+        }
+
+        .strength-text {
+            color: var(--text-muted);
+            font-size: 10.5px;
+        }
+
+        .password-rules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 10px;
+            margin-top: 8px;
+        }
+
+        .password-rule {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+
+            .password-rule i {
+                color: #b7c6ce;
+                font-size: 11px;
+            }
+
+            .password-rule.valid {
+                color: var(--success);
+            }
+
+                .password-rule.valid i {
+                    color: var(--success);
+                }
+
+        /* Terms */
+
+        .terms-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+            .terms-box input {
+                width: 17px;
+                height: 17px;
+                flex: 0 0 17px;
+                margin-top: 1px;
+                accent-color: var(--brand-primary);
+                cursor: pointer;
+            }
+
+        .terms-label {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+            .terms-label a {
+                color: var(--brand-primary);
+                font-weight: 800;
+                text-decoration: underline;
+            }
+
+        /* Button */
+
+        .register-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 53px;
+            overflow: hidden;
+            border: 0;
+            border-radius: var(--radius-md);
+            color: #ffffff;
+            background: linear-gradient( 100deg, var(--brand-primary-dark), var(--brand-primary), var(--brand-secondary) );
+            background-size: 200% auto;
+            box-shadow: var(--shadow-button);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+        }
+
+            .register-button:hover {
+                background-position: right center;
+                box-shadow: 0 16px 32px rgba(23, 105, 170, 0.34);
+                transform: translateY(-2px);
+            }
+
+            .register-button:active {
+                transform: translateY(0);
+            }
+
+        .button-arrow {
+            transition: transform 0.25s ease;
+        }
+
+        .register-button:hover .button-arrow {
+            transform: translateX(4px);
+        }
+
+        .button-loader {
+            display: none;
+            width: 17px;
+            height: 17px;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .register-button.loading .button-text,
+        .register-button.loading .button-arrow {
+            display: none;
+        }
+
+        .register-button.loading .button-loader {
+            display: block;
+        }
+
+        /* Original activation notice */
+
+        .signup-notice {
+            margin-top: 22px;
+            padding: 13px 15px;
+            border: 1px solid rgba(23, 105, 170, 0.2);
+            border-radius: 12px;
+            color: var(--brand-primary-dark);
+            background: rgba(37, 169, 224, 0.08);
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+            .signup-notice i {
+                margin-right: 5px;
+                color: var(--brand-primary);
+            }
+
+        .login-link {
+            margin: 22px 0 0;
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 12px;
+        }
+
+            .login-link a {
+                margin-left: 4px;
+                color: var(--brand-primary);
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+                .login-link a:hover {
+                    color: var(--brand-primary-dark);
+                    text-decoration: underline;
+                }
+
+        /* Background animation */
+
+        .ambient {
+            position: absolute;
+            z-index: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        .ambient-one {
+            top: 8%;
+            left: 4%;
+            width: 110px;
+            height: 110px;
+            background: rgba(37, 169, 224, 0.16);
+            animation: floatOne 7s ease-in-out infinite;
+        }
+
+        .ambient-two {
+            top: 10%;
+            right: 8%;
+            width: 180px;
+            height: 180px;
+            background: rgba(67, 198, 185, 0.13);
+            animation: floatTwo 9s ease-in-out infinite;
+        }
+
+        .ambient-three {
+            bottom: 3%;
+            left: 35%;
+            width: 80px;
+            height: 80px;
+            background: rgba(23, 105, 170, 0.1);
+            animation: floatThree 8s ease-in-out infinite;
+        }
+
+        /* Tablet */
+
+        @media (max-width: 991.98px) {
+            .register-page {
+                padding: 20px 15px;
+            }
+
+            .register-shell {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .brand-panel {
+                min-height: 430px;
+                padding: 38px 40px;
+            }
+
+            .brand-logo {
+                margin-bottom: 64px;
+            }
+
+            .brand-copy h1 {
+                font-size: clamp(2.3rem, 7vw, 3.7rem);
+            }
+
+            .benefit-list {
+                margin-top: 34px;
+            }
+
+            .register-panel {
+                min-height: 680px;
+                padding: 46px 40px;
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 575.98px) {
+            .register-page {
+                display: block;
+                padding: 0;
+            }
+
+            .register-container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .register-shell {
+                min-height: 100svh;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .brand-panel {
+                display: none;
+            }
+
+            .register-panel {
+                display: block;
+                min-height: 100svh;
+                padding: 30px 22px 26px;
+            }
+
+            .register-card {
+                max-width: 100%;
+                margin-top: 12px;
+            }
+
+            .mobile-logo {
+                display: block;
+                margin-bottom: 42px;
+                text-align: center;
+            }
+
+                .mobile-logo img {
+                    display: block;
+                    width: auto;
+                    max-width: 190px;
+                    height: 46px;
+                    margin: auto;
+                }
+
+            .register-heading {
+                margin-bottom: 28px;
+            }
+
+                .register-heading h2 {
+                    font-size: 28px;
+                }
+
+            .registration-form {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Animations */
+
+        @keyframes shellEnter {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateX(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 5px rgba(67, 198, 185, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 0 9px rgba(67, 198, 185, 0.04);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatOne {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, 20px);
+            }
+        }
+
+        @keyframes floatTwo {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-25px, 30px);
+            }
+        }
+
+        @keyframes floatThree {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, -25px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="register-page">
+        <div class="ambient ambient-one"></div>
+        <div class="ambient ambient-two"></div>
+        <div class="ambient ambient-three"></div>
+
+        <div class="register-container">
+            <div class="register-shell">
+
+                <!-- Left branding panel -->
+                <section class="brand-panel">
+                    <div class="brand-content">
+                        <a href="index.html" class="brand-logo">
+                            <img src="assets/images/logo.png"
+                                 alt="NEXGRA logo" />
+                        </a>
+
+                        <div class="brand-copy">
+                            <span class="eyebrow">
+                                <span class="eyebrow-dot"></span>
+                                LIVE MEMBER SIGNUP
+                            </span>
+
+                            <h1>
+                                Start your
+                                <span>member journey.</span>
+                            </h1>
+
+                            <p>
+                                Create your NEXGRA member account and get secure access to
+                                your member services.
+                            </p>
+                        </div>
+
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">
+                                    <i class="bi bi-person-check"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Quick registration</strong>
+                                    <small>Create your member ID in a few steps.</small>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Secure account</strong>
+                                    <small>Your account details stay protected.</small>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon">
+                                    <i class="bi bi-people"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Member community</strong>
+                                    <small>Connect with the NEXGRA network.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brand-footer">
+                        <span>© 2026 NEXGRA</span>
+                        <span class="footer-line"></span>
+                        <span>Member services</span>
+                    </div>
+                </section>
+
+                <!-- Right registration panel -->
+                <section class="register-panel">
+                    <div class="register-card">
+
+                        <div class="mobile-logo">
+                            <a href="index.html">
+                                <img src="assets/images/logo.png"
+                                     alt="NEXGRA logo" />
+                            </a>
+                        </div>
+
+                        <div class="register-heading">
+                            <span class="signup-label">LIVE MEMBER SIGNUP</span>
+
+                            <h2>Create account</h2>
+
+                            <p>
+                                Complete all the details below to create your member ID.
+                            </p>
+                        </div>
+
+                        <form id="registerForm"
+                              class="registration-form"
+                              novalidate
+                              autocomplete="on">
+                            <!-- Success alert -->
+                            <div id="successMessage"
+                                 class="status-message success-message full-width"
+                                 role="status"
+                                 aria-live="polite">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Account created successfully!</span>
+                            </div>
+
+                            <!-- Error alert -->
+                            <div id="errorMessage"
+                                 class="status-message error-message full-width"
+                                 role="alert"
+                                 aria-live="assertive">
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                                <span>Please check all fields and try again.</span>
+                            </div>
+
+                            <!-- Username -->
+                            <div class="form-group full-width">
+                                <label for="usernameInput">
+                                    USERNAME <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-person-badge input-icon"></i>
+
+                                    <input type="text"
+                                           id="usernameInput"
+                                           name="username"
+                                           class="modern-input"
+                                           placeholder="Choose a unique username"
+                                           autocomplete="username"
+                                           required />
+                                </div>
+
+                                <small class="field-help">
+                                    Username is unique and will be used for sign in and
+                                    password recovery.
+                                </small>
+
+                                <small class="input-error">
+                                    Please enter a valid username.
+                                </small>
+                            </div>
+
+                            <!-- Full name -->
+                            <div class="form-group full-width">
+                                <label for="fullNameInput">
+                                    FULL NAME <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-person input-icon"></i>
+
+                                    <input type="text"
+                                           id="fullNameInput"
+                                           name="full_name"
+                                           class="modern-input"
+                                           placeholder="Enter your full name"
+                                           autocomplete="name"
+                                           required />
+                                </div>
+
+                                <small class="input-error">
+                                    Please enter your full name.
+                                </small>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group full-width">
+                                <label for="emailInput">
+                                    EMAIL ADDRESS <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-envelope input-icon"></i>
+
+                                    <input type="email"
+                                           id="emailInput"
+                                           name="email"
+                                           class="modern-input"
+                                           placeholder="Enter your email address"
+                                           autocomplete="email"
+                                           required />
+                                </div>
+
+                                <small class="field-help">
+                                    The same email may be used for more than one member ID.
+                                </small>
+
+                                <small class="input-error">
+                                    Please enter a valid email address.
+                                </small>
+                            </div>
+
+                            <!-- Mobile -->
+                            <div class="form-group full-width">
+                                <label for="mobileInput">
+                                    MOBILE NUMBER
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-phone input-icon"></i>
+
+                                    <input type="tel"
+                                           id="mobileInput"
+                                           name="mobile"
+                                           class="modern-input"
+                                           placeholder="Enter mobile number (optional)"
+                                           autocomplete="tel" />
+                                </div>
+
+                                <small class="field-help">
+                                    Optional — The same mobile number may be used for more than
+                                    one member ID.
+                                </small>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group full-width">
+                                <label for="passwordInput">
+                                    PASSWORD <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-lock input-icon"></i>
+
+                                    <input type="password"
+                                           id="passwordInput"
+                                           name="password"
+                                           class="modern-input password-input"
+                                           placeholder="Create a password"
+                                           autocomplete="new-password"
+                                           required />
+
+                                    <button type="button"
+                                            id="passwordToggle"
+                                            class="password-toggle"
+                                            aria-label="Show password">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+
+                                <div id="passwordStrength" class="password-strength">
+                                    <div class="strength-bar">
+                                        <span class="strength-segment"></span>
+                                        <span class="strength-segment"></span>
+                                        <span class="strength-segment"></span>
+                                        <span class="strength-segment"></span>
+                                    </div>
+
+                                    <div class="strength-text">
+                                        Password strength:
+                                        <span id="strengthText">Weak</span>
+                                    </div>
+                                </div>
+
+                                <small class="input-error">
+                                    Please enter a valid password.
+                                </small>
+                            </div>
+
+                            <!-- Country -->
+                            <div class="form-group full-width">
+                                <label for="countrySelect">COUNTRY</label>
+
+                                <select id="countrySelect"
+                                        name="country"
+                                        class="modern-select"
+                                        autocomplete="country-name">
+                                    <option value="">Select country</option>
+                                    <option value="AE">United Arab Emirates</option>
+                                    <option value="IN">India</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                </select>
+                            </div>
+
+                            <!-- Sponsor referral -->
+                            <div class="form-group full-width">
+                                <label for="referralInput">
+                                    SPONSOR REFERRAL CODE OR USERNAME (OPTIONAL)
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <i class="bi bi-share input-icon"></i>
+
+                                    <input type="text"
+                                           id="referralInput"
+                                           name="referral"
+                                           class="modern-input"
+                                           placeholder="Referral code or sponsor username"
+                                           autocomplete="off" />
+                                </div>
+
+                                <small class="field-help">
+                                    Leave blank to join under the company root ID.
+                                </small>
+                            </div>
+
+                            <!-- Membership terms -->
+                            <div class="form-group full-width">
+                                <div class="terms-box">
+                                    <input type="checkbox"
+                                           id="termsCheck"
+                                           name="terms"
+                                           required />
+
+                                    <label for="termsCheck" class="terms-label">
+                                        I ACCEPT THE CURRENT
+                                        <a href="terms.html">
+                                            MEMBER SHIP TERMS.
+                                        </a>
+                                        <span class="required-mark">*</span>
+                                    </label>
+                                </div>
+
+                                <small id="termsError" class="input-error">
+                                    You must accept the membership terms.
+                                </small>
+                            </div>
+
+                            <!-- Create member ID -->
+                            <div class="form-group full-width">
+                                <button type="submit"
+                                        id="registerButton"
+                                        class="register-button">
+                                    <span class="button-text">CREATE MEMBER ID</span>
+                                    <span class="button-loader"></span>
+                                    <i class="bi bi-arrow-right button-arrow"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Activation notice -->
+                        <div class="signup-notice">
+                            <i class="bi bi-info-circle"></i>
+                            Live member signup is available. Membership activation requires
+                            USD 100 funding and administrator posting.
+                        </div>
+
+                        <!-- Sign-in link -->
+                        <p class="login-link">
+                            Already registered?
+                            <a href="login.html">Sign in</a>
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("registerForm");
+
+            const usernameInput =
+                document.getElementById("usernameInput");
+
+            const fullNameInput =
+                document.getElementById("fullNameInput");
+
+            const emailInput =
+                document.getElementById("emailInput");
+
+            const mobileInput =
+                document.getElementById("mobileInput");
+
+            const passwordInput =
+                document.getElementById("passwordInput");
+
+            const countrySelect =
+                document.getElementById("countrySelect");
+
+            const referralInput =
+                document.getElementById("referralInput");
+
+            const termsCheck =
+                document.getElementById("termsCheck");
+
+            const passwordToggle =
+                document.getElementById("passwordToggle");
+
+            const passwordStrength =
+                document.getElementById("passwordStrength");
+
+            const strengthText =
+                document.getElementById("strengthText");
+
+            const strengthSegments =
+                document.querySelectorAll(".strength-segment");
+
+            const successMessage =
+                document.getElementById("successMessage");
+
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+            const registerButton =
+                document.getElementById("registerButton");
+
+            const termsError =
+                document.getElementById("termsError");
+
+            function setInvalid(input, invalid) {
+                const formGroup = input.closest(".form-group");
+
+                if (formGroup) {
+                    formGroup.classList.toggle("invalid", invalid);
+                }
+
+                input.setAttribute(
+                    "aria-invalid",
+                    invalid ? "true" : "false"
+                );
+            }
+
+            function clearMessages() {
+                successMessage.classList.remove("show");
+                errorMessage.classList.remove("show");
+            }
+
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function getPasswordScore(password) {
+                let score = 0;
+
+                if (password.length >= 8) {
+                    score++;
+                }
+
+                if (/[A-Z]/.test(password)) {
+                    score++;
+                }
+
+                if (/[0-9]/.test(password)) {
+                    score++;
+                }
+
+                if (/[^A-Za-z0-9]/.test(password)) {
+                    score++;
+                }
+
+                return score;
+            }
+
+            function updatePasswordStrength() {
+                const password = passwordInput.value;
+
+                if (password.length === 0) {
+                    passwordStrength.classList.remove("visible");
+                    return;
+                }
+
+                passwordStrength.classList.add("visible");
+
+                const score = getPasswordScore(password);
+
+                strengthSegments.forEach(function (segment, index) {
+                    segment.style.background = "#e5edf1";
+
+                    if (index < score) {
+                        if (score <= 1) {
+                            segment.style.background = "#dc5868";
+                        } else if (score <= 3) {
+                            segment.style.background = "#d89b3b";
+                        } else {
+                            segment.style.background = "#178b6c";
+                        }
+                    }
+                });
+
+                if (score <= 1) {
+                    strengthText.textContent = "Weak";
+                } else if (score <= 3) {
+                    strengthText.textContent = "Medium";
+                } else {
+                    strengthText.textContent = "Strong";
+                }
+            }
+
+            passwordToggle.addEventListener("click", function () {
+                const isPassword =
+                    passwordInput.type === "password";
+
+                passwordInput.type = isPassword
+                    ? "text"
+                    : "password";
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    isPassword
+                        ? "Hide password"
+                        : "Show password"
+                );
+
+                passwordToggle.innerHTML = isPassword
+                    ? '<i class="bi bi-eye-slash"></i>'
+                    : '<i class="bi bi-eye"></i>';
+            });
+
+            passwordInput.addEventListener("input", function () {
+                updatePasswordStrength();
+                clearMessages();
+            });
+
+            [
+                usernameInput,
+                fullNameInput,
+                emailInput,
+                mobileInput,
+                countrySelect,
+                referralInput
+            ].forEach(function (input) {
+                input.addEventListener("input", function () {
+                    clearMessages();
+                });
+            });
+
+            termsCheck.addEventListener("change", function () {
+                clearMessages();
+
+                if (termsCheck.checked) {
+                    termsCheck
+                        .closest(".form-group")
+                        .classList.remove("invalid");
+
+                    termsError.style.display = "none";
+                }
+            });
+
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+
+                clearMessages();
+
+                const username =
+                    usernameInput.value.trim();
+
+                const fullName =
+                    fullNameInput.value.trim();
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+                const passwordScore =
+                    getPasswordScore(password);
+
+                let valid = true;
+
+                if (username.length < 3) {
+                    setInvalid(usernameInput, true);
+                    valid = false;
+                } else {
+                    setInvalid(usernameInput, false);
+                }
+
+                if (fullName.length < 2) {
+                    setInvalid(fullNameInput, true);
+                    valid = false;
+                } else {
+                    setInvalid(fullNameInput, false);
+                }
+
+                if (!isValidEmail(email)) {
+                    setInvalid(emailInput, true);
+                    valid = false;
+                } else {
+                    setInvalid(emailInput, false);
+                }
+
+                if (passwordScore < 3) {
+                    setInvalid(passwordInput, true);
+                    valid = false;
+                } else {
+                    setInvalid(passwordInput, false);
+                }
+
+                if (!termsCheck.checked) {
+                    termsCheck
+                        .closest(".form-group")
+                        .classList.add("invalid");
+
+                    termsError.style.display = "block";
+                    valid = false;
+                } else {
+                    termsCheck
+                        .closest(".form-group")
+                        .classList.remove("invalid");
+
+                    termsError.style.display = "none";
+                }
+
+                if (!valid) {
+                    errorMessage.classList.add("show");
+
+                    const firstInvalid =
+                        form.querySelector(
+                            '[aria-invalid="true"], .invalid input'
+                        );
+
+                    if (firstInvalid) {
+                        firstInvalid.focus();
+                    }
+
+                    return;
+                }
+
+                registerButton.classList.add("loading");
+                registerButton.disabled = true;
+
+                /*
+                  Demo delay.
+                  Yahan apni backend API call add karein.
+                */
+                await new Promise(function (resolve) {
+                    setTimeout(resolve, 1200);
+                });
+
+                registerButton.classList.remove("loading");
+                registerButton.disabled = false;
+
+                successMessage.classList.add("show");
+
+                setTimeout(function () {
+                    window.location.href = "login.html";
+                }, 1300);
+            });
+        });
+    </script>
+    <script src="assets/js/custom-animations.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* =========================================================================
+   NEXGRA — NEW UI DESIGN LAYER
+   Modern, animated, glass + gradient redesign built on top of the existing
+   template. Nothing here removes or renames existing classes/JS hooks —
+   it only restyles them, so every function (theme switch, sidebar toggle,
+   dropdowns, charts, forms) keeps working exactly as before.
+   Brand colors taken from the NEXGRA logo: Red #E30000 → Green #00A64F
+   ========================================================================= */
+
+:root{
+  --ak-red:#E30000;
+  --ak-red-dark:#B00000;
+  --ak-green:#00A64F;
+  --ak-green-dark:#00803D;
+  --ak-gradient: linear-gradient(135deg, var(--ak-red) 0%, #ff5b3d 45%, var(--ak-green) 100%);
+  --ak-gradient-soft: linear-gradient(135deg, rgba(227,0,0,.12) 0%, rgba(0,166,79,.12) 100%);
+  --ak-radius: 1rem;
+  --ak-radius-sm: .65rem;
+  --ak-shadow-sm: 0 2px 10px -2px rgba(20,20,43,.06);
+  --ak-shadow: 0 10px 30px -12px rgba(20,20,43,.14);
+  --ak-shadow-lg: 0 20px 45px -15px rgba(20,20,43,.22);
+  --ak-ease: cubic-bezier(.22,1,.36,1);
+  --ak-speed: .45s;
+}
+
+[data-bs-theme="dark"]{
+  --ak-shadow-sm: 0 2px 10px -2px rgba(0,0,0,.35);
+  --ak-shadow: 0 10px 30px -12px rgba(0,0,0,.5);
+  --ak-shadow-lg: 0 20px 45px -15px rgba(0,0,0,.6);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* -------------------------------------------------------------------------
+   0. Top progress loader (shown briefly while the page boots)
+   ------------------------------------------------------------------------- */
+#ak-loadbar{
+  position:fixed; top:0; left:0; height:3px; width:0%;
+  background:var(--ak-gradient); z-index:99999;
+  box-shadow:0 0 12px rgba(227,0,0,.55);
+  transition:width .5s var(--ak-ease), opacity .4s ease .15s;
+}
+#ak-loadbar.ak-done{ opacity:0; }
+
+/* -------------------------------------------------------------------------
+   1. Global feel — smooth theme swap, custom scrollbar, selection color
+   ------------------------------------------------------------------------- */
+html{ scroll-behavior:smooth; }
+
+body,
+.card, .main-topbar, .main-sidebar, .btn, .form-control, .form-select,
+.dropdown-menu, .badge, .nav-link, .table, .modal-content, .offcanvas{
+  transition: background-color var(--ak-speed) var(--ak-ease),
+              border-color var(--ak-speed) var(--ak-ease),
+              color var(--ak-speed) var(--ak-ease),
+              box-shadow .3s var(--ak-ease),
+              transform .3s var(--ak-ease);
+}
+
+::selection{ background:var(--ak-green); color:#fff; }
+
+::-webkit-scrollbar{ width:9px; height:9px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, var(--ak-red), var(--ak-green));
+  border-radius:99px; border:2px solid transparent; background-clip:padding-box;
+}
+* { scrollbar-width: thin; scrollbar-color: var(--ak-red) transparent; }
+
+/* -------------------------------------------------------------------------
+   2. Page entrance animation (fires on every load, per page)
+   ------------------------------------------------------------------------- */
+@keyframes ak-fade-up{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@keyframes ak-fade-in{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+
+.page-wrapper{ animation: ak-fade-in .5s var(--ak-ease) both; }
+
+.page-wrapper .card,
+.page-wrapper .row > div{
+  animation: ak-fade-up .6s var(--ak-ease) both;
+}
+/* gentle stagger for the first ~14 blocks on a page */
+.page-wrapper .row > div:nth-child(1){ animation-delay:.02s; }
+.page-wrapper .row > div:nth-child(2){ animation-delay:.06s; }
+.page-wrapper .row > div:nth-child(3){ animation-delay:.10s; }
+.page-wrapper .row > div:nth-child(4){ animation-delay:.14s; }
+.page-wrapper .row > div:nth-child(5){ animation-delay:.18s; }
+.page-wrapper .row > div:nth-child(6){ animation-delay:.22s; }
+.page-wrapper .row > div:nth-child(7){ animation-delay:.26s; }
+.page-wrapper .row > div:nth-child(8){ animation-delay:.30s; }
+.page-wrapper .row > div:nth-child(n+9){ animation-delay:.34s; }
+
+/* scroll-reveal (re-triggers as you scroll down long pages) */
+.ak-reveal{ opacity:0; transform:translateY(22px); transition:opacity .6s var(--ak-ease), transform .6s var(--ak-ease); }
+.ak-reveal.ak-in{ opacity:1; transform:translateY(0); }
+
+/* -------------------------------------------------------------------------
+   3. Topbar — glass / frosted, gets a shadow once you scroll
+   ------------------------------------------------------------------------- */
+.main-topbar{
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  background:color-mix(in srgb, var(--bs-body-bg) 78%, transparent) !important;
+  border-bottom:1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+.main-topbar.ak-scrolled{ box-shadow:var(--ak-shadow); }
+
+.main-topbar .navbar-brand img{ transition:transform .5s var(--ak-ease); }
+.main-topbar .navbar-brand:hover img{ transform:scale(1.05) rotate(-1deg); }
+
+.topbar-link{ position:relative; border-radius:.75rem; overflow:hidden; }
+.topbar-link::after{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  background:var(--ak-gradient-soft); opacity:0; transition:opacity .3s var(--ak-ease);
+}
+.topbar-link:hover::after{ opacity:1; }
+.topbar-link:hover{ transform:translateY(-2px); }
+
+.navbar-search input:focus{
+  box-shadow:0 0 0 .18rem color-mix(in srgb, var(--ak-green) 25%, transparent) !important;
+}
+
+/* -------------------------------------------------------------------------
+   4. Sidebar — animated active indicator + icon micro-interactions
+   ------------------------------------------------------------------------- */
+.main-sidebar{
+  border-right:1px solid rgba(255,255,255,.06);
+}
+
+.navbar-menu .nav-link{
+  position:relative; border-radius:.75rem; overflow:hidden;
+  transition: color .3s var(--ak-ease), background-color .3s var(--ak-ease), transform .25s var(--ak-ease), padding .3s var(--ak-ease);
+}
+.navbar-menu .nav-link::before{
+  content:""; position:absolute; left:0; top:50%; height:0; width:3px;
+  background:var(--ak-gradient); border-radius:0 4px 4px 0;
+  transform:translateY(-50%); transition:height .3s var(--ak-ease);
+}
+.navbar-menu .nav-link:hover{ transform:translateX(3px); }
+.navbar-menu .nav-link:hover::before{ height:55%; }
+.navbar-menu .nav-link.active{ background:var(--ak-gradient-soft) !important; }
+.navbar-menu .nav-link.active::before{ height:70%; }
+.navbar-menu .nav-link.active .icons{
+  background:var(--ak-gradient); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.navbar-menu .nav-link .icons{ transition:transform .3s var(--ak-ease); display:inline-flex; }
+.navbar-menu .nav-link:hover .icons{ transform:scale(1.15) rotate(-4deg); }
+
+.sidebar-toggle{ transition:transform .35s var(--ak-ease); border-radius:.6rem; }
+.sidebar-toggle:hover{ transform:rotate(180deg); }
+
+/* -------------------------------------------------------------------------
+   5. Cards — soft elevation, gradient top accent, hover lift
+   ------------------------------------------------------------------------- */
+.card{
+  border:1px solid color-mix(in srgb, currentColor 6%, transparent);
+  border-radius:var(--ak-radius) !important;
+  box-shadow:var(--ak-shadow-sm);
+  position:relative; overflow:hidden;
+}
+.card:hover{ box-shadow:var(--ak-shadow); transform:translateY(-3px); }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: #80808033;
+        opacity: 0;
+        transition: opacity .35s var(--ak-ease);
+    }
+.card:hover::before{ opacity:1; }
+
+/* stat / widget cards get a permanent brand accent */
+.finance-widget-cart, .finance-card-1, .finance-card-2,
+.crypto-widget-cart, .nft-widget, .postcast-main-widget{
+  border-radius:var(--ak-radius) !important;
+}
+.finance-widget-cart::before, .crypto-widget-cart::before{ opacity:1; }
+
+.card-hover-animate:hover, .card-hover-effect:hover{
+  box-shadow:var(--ak-shadow-lg) !important;
+}
+
+/* -------------------------------------------------------------------------
+   6. Buttons — brand gradient + soft ripple
+   ------------------------------------------------------------------------- */
+.btn{ border-radius:.7rem; position:relative; overflow:hidden; }
+
+.btn-primary{
+  background:var(--ak-gradient) !important;
+  background-size:160% 160% !important;
+  border:none !important;
+  box-shadow:0 8px 20px -8px rgba(227,0,0,.45);
+}
+.btn-primary:hover{
+  background-position:100% 0 !important;
+  box-shadow:0 10px 26px -8px rgba(0,166,79,.55);
+  transform:translateY(-2px);
+}
+.btn-primary:active{ transform:translateY(0) scale(.98); }
+
+.btn:not(.btn-close):not(.sidebar-toggle)::after{
+  content:""; position:absolute; border-radius:50%; pointer-events:none;
+  width:8px; height:8px; left:var(--ak-x,50%); top:var(--ak-y,50%);
+  background:rgba(255,255,255,.55); transform:translate(-50%,-50%) scale(0);
+  opacity:0;
+}
+.btn.ak-ripple::after{ animation:ak-ripple .55s ease-out; }
+@keyframes ak-ripple{
+  0%{ transform:translate(-50%,-50%) scale(0); opacity:.55; }
+  100%{ transform:translate(-50%,-50%) scale(28); opacity:0; }
+}
+
+/* -------------------------------------------------------------------------
+   7. Forms — brand focus glow
+   ------------------------------------------------------------------------- */
+.form-control:focus, .form-select:focus{
+  border-color:var(--ak-green) !important;
+  box-shadow:0 0 0 .18rem color-mix(in srgb, var(--ak-green) 22%, transparent) !important;
+}
+.form-check-input:checked{
+  background-color:var(--ak-green) !important; border-color:var(--ak-green) !important;
+}
+
+/* -------------------------------------------------------------------------
+   8. Badges / progress — gradient fills
+   ------------------------------------------------------------------------- */
+.progress-bar{ background:var(--ak-gradient) !important; }
+.badge.bg-primary, .badge.text-bg-primary{ background:var(--ak-gradient) !important; }
+
+/* -------------------------------------------------------------------------
+   9. Avatars / images — subtle hover zoom
+   ------------------------------------------------------------------------- */
+img.rounded, img.rounded-circle{ transition:transform .4s var(--ak-ease); }
+.card:hover img.rounded, .card:hover img.rounded-circle{ transform:scale(1.03); }
+
+/* -------------------------------------------------------------------------
+   10. Tables — smooth row hover
+   ------------------------------------------------------------------------- */
+.table > tbody > tr{ transition:background-color .25s var(--ak-ease); }
+.table > tbody > tr:hover{ background:var(--ak-gradient-soft); }
+
+/* -------------------------------------------------------------------------
+   11. Responsive polish
+   ------------------------------------------------------------------------- */
+@media (max-width: 991.98px){
+  .card{ border-radius:.85rem !important; }
+  .page-wrapper .row > div{ animation-delay:0s !important; }
+}
+@media (max-width: 575.98px){
+  .main-topbar .navbar-search{ display:none !important; }
+  .card-body{ padding:1rem !important; }
+}
